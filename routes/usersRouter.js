@@ -3,6 +3,7 @@ import {
   registerUser,
   logoutUser,
   loginUser,
+  deleteAllUsers,
 } from "../controllers/usersController.js";
 // import { validateRegistration } from "../validators/validateRegistration.js";
 // import { validateLogin } from "../validators/validateLogin.js";
@@ -16,9 +17,11 @@ const usersRouter = Router();
 
 usersRouter.post("/register", registerUser);
 
-usersRouter.get("/login", (req, res) => {
-  res.render("login", { title: "Log in" });
-});
+usersRouter.delete("/delete", deleteAllUsers);
+
+// usersRouter.get("/login", (req, res) => {
+//   res.render("login", { title: "Log in" });
+// });
 
 usersRouter.post("/login", loginUser);
 

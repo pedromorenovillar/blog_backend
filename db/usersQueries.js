@@ -36,3 +36,6 @@ export function logoutUser(req, res) {
     });
   });
 }
+export function deleteUsers(req, res) {
+  return prisma.user.deleteMany();
+}

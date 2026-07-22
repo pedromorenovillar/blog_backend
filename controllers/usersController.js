@@ -1,7 +1,11 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { genPassword } from "../utils/password.js";
-import { insertUser } from "../db/usersQueries.js";
+import {
+  insertUser,
+  deleteUsers,
+  findUserByEmail,
+} from "../db/usersQueries.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -9,9 +13,9 @@ export const registerUser = async (req, res) => {
     const hash = await genPassword(user.password);
 
     const result = await insertUser(user, hash);
-    console.log({ result });
     res.json({
       message: `User ${user.email} added to the DB!`,
+      result: result,
     });
   } catch (error) {
     console.error(error);
@@ -36,7 +40,10 @@ export async function loginUser(req, res, next) {
     expiresIn: "1h",
   });
 
-  return res.json({ token });
+  return res.json({
+    message: "User logged in correctly",
+    token,
+  });
 }
 
 export function logoutUser(req, res) {
@@ -51,5 +58,13 @@ export function logoutUser(req, res) {
       redirectTo: "/",
       redirectDelay: 2500,
     });
+  });
+}
+
+export async function deleteAllUsers(req, res) {
+  const result = await deleteUsers();
+  res.json({
+    message: `All users deleted from the DB!`,
+    result: result,
   });
 }
