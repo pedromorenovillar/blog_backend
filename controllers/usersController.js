@@ -5,6 +5,7 @@ import {
   insertUser,
   deleteUsers,
   findUserByEmail,
+  addRefreshToken,
 } from "../db/usersQueries.js";
 
 export const registerUser = async (req, res) => {
@@ -36,13 +37,32 @@ export async function loginUser(req, res, next) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
-  const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
+  const accessToken = jwt.sign({ sub: user.id }, process.env.JWT_SECRET, {
+    expiresIn: "15min",
+  });
+  const refreshToken = jwt.sign(
+    { sub: user.id },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "7d" },
+  );
+  const expirationDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const hashedRefreshToken = await genPassword(refreshToken);
+  // Store hashedRefreshToken in the database
+  const result = await addRefreshToken(
+    user.id,
+    hashedRefreshToken,
+    expirationDate,
+  );
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // <-- browser will only send that cookie over HTTPS
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   return res.json({
-    message: "User logged in correctly",
-    token,
+    accessToken,
+    result,
   });
 }
 

@@ -36,6 +36,19 @@ export function logoutUser(req, res) {
     });
   });
 }
-export function deleteUsers(req, res) {
-  return prisma.user.deleteMany();
+export async function deleteUsers(req, res) {
+  return await prisma.user.deleteMany();
+}
+export async function addRefreshToken(
+  userId,
+  refreshTokenHash,
+  expirationDate,
+) {
+  return await prisma.refreshToken.create({
+    data: {
+      hash: refreshTokenHash,
+      userId,
+      expiresAt: expirationDate,
+    },
+  });
 }
