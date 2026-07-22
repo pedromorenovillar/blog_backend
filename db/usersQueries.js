@@ -21,3 +21,18 @@ export async function insertUser(user, hash) {
     },
   });
 }
+
+export function logoutUser(req, res) {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.render("status", {
+      pageTitle: "Logged out",
+      title: "Log out",
+      message: "You have logged out correctly.",
+      redirectTo: "/",
+      redirectDelay: 2500,
+    });
+  });
+}
