@@ -10,9 +10,9 @@ import passport from "passport";
 
 const usersRouter = Router();
 
-usersRouter.get("/register", (req, res) => {
-  res.render("register", { title: "Register user" });
-});
+// usersRouter.get("/register", (req, res) => {
+//   res.render("register", { title: "Register user" });
+// });
 
 usersRouter.post("/register", registerUser);
 

@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { genPassword } from "../utils/password.js";
+import { insertUser } from "../db/usersQueries.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -7,8 +9,9 @@ export const registerUser = async (req, res) => {
     const hash = await genPassword(user.password);
 
     const result = await insertUser(user, hash);
+    console.log({ result });
     res.json({
-      message: 'User added to the DB!'
+      message: `User ${user.email} added to the DB!`,
     });
   } catch (error) {
     console.error(error);
