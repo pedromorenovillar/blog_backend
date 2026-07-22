@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 import express from "express";
 import cors from "cors";
+import passport from "./config/passport.js";
 
 /* ===========================
    App config 1/2
@@ -12,7 +13,7 @@ const app = express(); // <-- Initialize express
 app.use(cors()); // <-- Allow cors
 app.use(express.json()); // <-- Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // <-- Parse the data into req.body for post requests
-
+app.use(passport.initialize());
 /* ===========================
    App routes
 =========================== */
