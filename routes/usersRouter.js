@@ -4,8 +4,8 @@ import {
   logoutUser,
   loginUser,
   deleteAllUsers,
-  getAccessToken,
 } from "../controllers/usersController.js";
+import { getAccessToken } from "../controllers/authController.js";
 // import { validateRegistration } from "../validators/validateRegistration.js";
 // import { validateLogin } from "../validators/validateLogin.js";
 import passport from "passport";
@@ -28,7 +28,6 @@ usersRouter.post("/login", loginUser);
 
 usersRouter.post("/logout", logoutUser);
 
-// TODO
 usersRouter.post("/token", getAccessToken);
 
 export { usersRouter };
