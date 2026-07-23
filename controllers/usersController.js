@@ -6,6 +6,7 @@ import {
   deleteUsers,
   findUserByEmail,
   addRefreshToken,
+  deleteRefreshToken,
 } from "../db/usersQueries.js";
 
 export const registerUser = async (req, res) => {
@@ -70,19 +71,23 @@ export async function loginUser(req, res, next) {
   }
 }
 
-export function logoutUser(req, res) {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.render("status", {
-      pageTitle: "Logged out",
-      title: "Log out",
-      message: "You have logged out correctly.",
-      redirectTo: "/",
-      redirectDelay: 2500,
-    });
-  });
+export async function logoutUser(req, res, next) {
+  // Read req.cookies.refreshToken.
+  // Verify it with jwt.verify() to get the user ID (sub).
+  // Find that user's stored refresh token(s).
+  // Compare the cookie value against the stored hash with bcrypt.compare().
+  // Delete the matching database row.
+  // Clear the cookie:
+  // res.clearCookie("refreshToken");
+  // Return a success response.
+  console.log(req.cookies);
+  try {
+    // await deleteRefreshToken(req.user.id);
+
+    res.json({});
+  } catch (error) {
+    next(error);
+  }
 }
 
 export async function deleteAllUsers(req, res) {
@@ -94,15 +99,14 @@ export async function deleteAllUsers(req, res) {
 }
 
 function generateAccessToken(user) {
-  return sign(user, process.env.JWT_SECRET, { expiresIn: "2m" });
+  return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "15m" });
 }
 export function getAccessToken(req, res) {
-  // Get user
-  const user = req.user
-  // Validate user
-  // Get token from DB
-  // Validate token
-  // Generate new token
-  // Store new token in DB
-  // Return token to client
+  // Read the refresh token from the cookie
+  // Verify the JWT signature
+  // Look up the user's stored refresh token(s)
+  // Compare the refresh token with the stored hash
+  // Check it hasn't expired (optional if relying on jverify)
+  // Generate a new access token
+  // Return the new access token
 }

@@ -26,7 +26,7 @@ usersRouter.delete("/delete", deleteAllUsers);
 
 usersRouter.post("/login", loginUser);
 
-usersRouter.get("/logout", logoutUser);
+usersRouter.post("/logout", logoutUser);
 
 usersRouter.post("/token", getAccessToken);
 

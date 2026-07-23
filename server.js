@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import express from "express";
 import cors from "cors";
 import passport from "./config/passport.js";
+import cookieParser from "cookie-parser";
 import { usersRouter } from "./routes/usersRouter.js";
 
 /* ===========================
@@ -16,7 +17,12 @@ app.use(cors());                                                                
 app.use(express.json());                                                        // <-- Parse JSON request bodies
 app.use(express.urlencoded({ extended: true }));                                // <-- Parse the data into req.body for post requests
 app.use(passport.initialize());
-
+app.use(cookieParser())
+app.use((req, res, next) => {
+  console.log("Cookie header:", req.headers.cookie);
+  console.log("Parsed cookies:", req.cookies);
+  next();
+});
 /* ===========================
    App routes
 =========================== */

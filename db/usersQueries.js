@@ -22,19 +22,12 @@ export async function insertUser(user, hash) {
   });
 }
 
-export function logoutUser(req, res) {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.render("status", {
-      pageTitle: "Logged out",
-      title: "Log out",
-      message: "You have logged out correctly.",
-      redirectTo: "/",
-      redirectDelay: 2500,
-    });
-  });
+export async function deleteRefreshToken(userId) {
+  // return prisma.refreshToken.deleteMany({
+  //   where: {
+  //     userId,
+  //   },
+  // });
 }
 export async function deleteUsers(req, res) {
   return await prisma.user.deleteMany();
