@@ -12,11 +12,9 @@ import passport from "passport";
 
 const usersRouter = Router();
 
-
 usersRouter.post("/register", registerUser);
 
 usersRouter.delete("/delete", deleteAllUsers);
-
 
 usersRouter.post("/login", loginUser);
 
@@ -24,10 +22,12 @@ usersRouter.post("/logout", logoutUser);
 
 usersRouter.post("/token", getAccessToken);
 
+// TODO register GET route --> in frontend?
 // usersRouter.get("/register", (req, res) => {
 //   res.render("register", { title: "Register user" });
 // });
 
+// TODO login GET route --> in frontend?
 // usersRouter.get("/login", (req, res) => {
 //   res.render("login", { title: "Log in" });
 // });

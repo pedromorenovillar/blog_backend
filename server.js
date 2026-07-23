@@ -4,6 +4,8 @@ import cors from "cors";
 import passport from "./config/passport.js";
 import cookieParser from "cookie-parser";
 import { usersRouter } from "./routes/usersRouter.js";
+import { postsRouter } from "./routes/postsRouter.js";
+import { commentsRouter } from "./routes/commentsRouter.js";
 
 /* ===========================
    App config 1/2
@@ -27,6 +29,8 @@ app.get("/", (req, res) => {
   res.json({ message: "API running" });
 });
 app.use("/users", usersRouter);
+app.use("/posts", postsRouter);
+app.use("/comments", commentsRouter);
 
 /* ===========================
    App config 2/2
