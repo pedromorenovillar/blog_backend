@@ -24,46 +24,50 @@ export const registerUser = async (req, res) => {
 };
 
 export async function loginUser(req, res, next) {
-  const { email, password } = req.body;
-  const user = await findUserByEmail(email);
+  try {
+    const { email, password } = req.body;
+    const user = await findUserByEmail(email);
 
-  if (!user) {
-    return res.status(401).json({ message: "Invalid credentials" });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const accessToken = jwt.sign({ sub: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "15min",
+    });
+    const refreshToken = jwt.sign(
+      { sub: user.id },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "7d" },
+    );
+    const expirationDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const hashedRefreshToken = await hashString(refreshToken);
+    // Store hashedRefreshToken in the database
+    const result = await addRefreshToken(
+      user.id,
+      hashedRefreshToken,
+      expirationDate,
+    );
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // <-- browser will only send that cookie over HTTPS
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.json({
+      accessToken,
+      result,
+    });
+  } catch (error) {
+    console.error(error);
   }
-
-  const match = await bcrypt.compare(password, user.password);
-
-  if (!match) {
-    return res.status(401).json({ message: "Invalid credentials" });
-  }
-
-  const accessToken = jwt.sign({ sub: user.id }, process.env.JWT_SECRET, {
-    expiresIn: "15min",
-  });
-  const refreshToken = jwt.sign(
-    { sub: user.id },
-    process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "7d" },
-  );
-  const expirationDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const hashedRefreshToken = await hashString(refreshToken);
-  // Store hashedRefreshToken in the database
-  const result = await addRefreshToken(
-    user.id,
-    hashedRefreshToken,
-    expirationDate,
-  );
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // <-- browser will only send that cookie over HTTPS
-    sameSite: "strict",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
-
-  return res.json({
-    accessToken,
-    result,
-  });
 }
 
 export function logoutUser(req, res) {
@@ -87,4 +91,18 @@ export async function deleteAllUsers(req, res) {
     message: `All users deleted from the DB!`,
     result: result,
   });
+}
+
+function generateAccessToken(user) {
+  return sign(user, process.env.JWT_SECRET, { expiresIn: "2m" });
+}
+export function getAccessToken(req, res) {
+  // Get user
+  const user = req.user
+  // Validate user
+  // Get token from DB
+  // Validate token
+  // Generate new token
+  // Store new token in DB
+  // Return token to client
 }

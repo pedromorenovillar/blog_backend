@@ -4,6 +4,7 @@ import {
   logoutUser,
   loginUser,
   deleteAllUsers,
+  getAccessToken,
 } from "../controllers/usersController.js";
 // import { validateRegistration } from "../validators/validateRegistration.js";
 // import { validateLogin } from "../validators/validateLogin.js";
@@ -26,5 +27,7 @@ usersRouter.delete("/delete", deleteAllUsers);
 usersRouter.post("/login", loginUser);
 
 usersRouter.get("/logout", logoutUser);
+
+usersRouter.post("/token", getAccessToken);
 
 export { usersRouter };
