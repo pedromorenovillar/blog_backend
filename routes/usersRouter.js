@@ -28,6 +28,7 @@ usersRouter.post("/login", loginUser);
 
 usersRouter.post("/logout", logoutUser);
 
+// TODO
 usersRouter.post("/token", getAccessToken);
 
 export { usersRouter };

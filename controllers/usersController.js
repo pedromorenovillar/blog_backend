@@ -7,6 +7,7 @@ import {
   findUserByEmail,
   addRefreshToken,
   deleteRefreshToken,
+  getUserToken,
 } from "../db/usersQueries.js";
 
 export const registerUser = async (req, res) => {
@@ -61,7 +62,6 @@ export async function loginUser(req, res, next) {
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-
     return res.json({
       accessToken,
       result,
@@ -72,19 +72,42 @@ export async function loginUser(req, res, next) {
 }
 
 export async function logoutUser(req, res, next) {
-  // Read req.cookies.refreshToken.
-  // Verify it with jwt.verify() to get the user ID (sub).
-  // Find that user's stored refresh token(s).
-  // Compare the cookie value against the stored hash with bcrypt.compare().
-  // Delete the matching database row.
-  // Clear the cookie:
-  // res.clearCookie("refreshToken");
-  // Return a success response.
-  console.log(req.cookies);
   try {
-    // await deleteRefreshToken(req.user.id);
+    // Read the cookie
+    const { refreshToken } = req.cookies;
+    if (!refreshToken) {
+      return res.status(401).json({ message: "No refresh token provided" });
+    }
 
-    res.json({});
+    // Verify the JWT
+    const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+    // Get the user's stored refresh token
+    const storedUserToken = await getUserToken(payload.sub);
+    if (!storedUserToken) {
+      return res.status(401).json({
+        message: "Refresh token not found",
+      });
+    }
+
+    // Compare cookie token with stored hash
+    const matches = await bcrypt.compare(refreshToken, storedUserToken.hash);
+    if (!matches) {
+      return res.status(401).json({
+        message: "Invalid refresh token",
+      });
+    }
+
+    // Delete the matching token
+    const result = await deleteRefreshToken(payload.sub);
+
+    // Clear the cookie
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    res.json({ message: "Logged out successfully" });
   } catch (error) {
     next(error);
   }
