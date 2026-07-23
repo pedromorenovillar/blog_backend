@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { genPassword } from "../utils/password.js";
+import { hashString } from "../utils/hashString.js";
 import {
   insertUser,
   deleteUsers,
@@ -11,7 +11,7 @@ import {
 export const registerUser = async (req, res) => {
   try {
     const user = req.body;
-    const hash = await genPassword(user.password);
+    const hash = await hashString(user.password);
 
     const result = await insertUser(user, hash);
     res.json({
@@ -46,7 +46,7 @@ export async function loginUser(req, res, next) {
     { expiresIn: "7d" },
   );
   const expirationDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const hashedRefreshToken = await genPassword(refreshToken);
+  const hashedRefreshToken = await hashString(refreshToken);
   // Store hashedRefreshToken in the database
   const result = await addRefreshToken(
     user.id,

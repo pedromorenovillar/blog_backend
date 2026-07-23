@@ -8,13 +8,13 @@ import { usersRouter } from "./routes/usersRouter.js";
    App config 1/2
 =========================== */
 
-config(); // <-- Load .env variables from dotenv module
+config();                                                                       // <-- Load .env variables from dotenv module
 const PORT = process.env.PORT;
-const app = express(); // <-- Initialize express
+const app = express();                                                          // <-- Initialize express
 
-app.use(cors()); // <-- Allow cors
-app.use(express.json()); // <-- Parse JSON request bodies
-app.use(express.urlencoded({ extended: true })); // <-- Parse the data into req.body for post requests
+app.use(cors());                                                                // <-- Allow cors
+app.use(express.json());                                                        // <-- Parse JSON request bodies
+app.use(express.urlencoded({ extended: true }));                                // <-- Parse the data into req.body for post requests
 app.use(passport.initialize());
 
 /* ===========================
