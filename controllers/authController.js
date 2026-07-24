@@ -7,9 +7,10 @@ import {
   getUserToken,
 } from "../db/authQueries.js";
 
+// TODO Change to 15min for deployment
 export function generateAccessToken(userId) {
   return jwt.sign({ sub: userId }, process.env.JWT_SECRET, {
-    expiresIn: "15min",
+    expiresIn: "1d",
   });
 }
 
