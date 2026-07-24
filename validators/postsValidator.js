@@ -1,14 +1,30 @@
-// create post
+import { body, param } from "express-validator";
+import { handleValidationErrors } from "./handleValidationerrors.js";
 
-// title exists
-// title isn't empty
-// content exists
-// content isn't empty
-// maybe a maximum length
+const createPostValidation = [
+  body("title")
+    .trim()
+    .notEmpty()
+    .withMessage("A title is required.")
+    .isLength({ max: 100 })
+    .withMessage("Title cannot be longer than 100 characters."),
 
-// update post
+  body("content")
+    .trim()
+    .notEmpty()
+    .withMessage("Content is required.")
+    .isLength({ max: 3000 })
+    .withMessage("Content cannot be longer than 3000 characters."),
+];
 
-// Does the post exist?
-// Is postId a valid number?
-// Is title present?
-// Is content present?
+const updatePostValidation = [
+  param("id").isInt({ min: 1 }).withMessage("Invalid post id."),
+];
+
+export const validatePost = [...createPostValidation, handleValidationErrors];
+
+export const validateUpdatePost = [
+  ...updatePostValidation,
+  ...createPostValidation,
+  handleValidationErrors,
+];

@@ -12,11 +12,15 @@ import {
   publishPost,
   unpublishPost,
 } from "../controllers/postsController.js";
-// import { validatePost } from "../validators/postsValidator.js";
+
+import {
+  validateUpdatePost,
+  validatePost,
+} from "../validators/postsValidator.js";
 
 const postsRouter = Router();
 
-postsRouter.post("/me", isAuth, createPost);
+postsRouter.post("/me", isAuth, validatePost, createPost);
 
 postsRouter.get("/me", isAuth, getAllUserPosts);
 
@@ -24,7 +28,7 @@ postsRouter.get("/", getAllPublishedPosts);
 
 postsRouter.get("/:id", getSinglePost);
 
-postsRouter.put("/:id", isAuth, isPostOwner, updatePost);
+postsRouter.put("/:id", isAuth, validateUpdatePost, isPostOwner, updatePost);
 
 postsRouter.delete("/:id", isAuth, isPostOwner, deletePost);
 
