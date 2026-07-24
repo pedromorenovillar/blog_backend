@@ -93,6 +93,18 @@ curl -X POST -H "Content-Type: application/json" -d '{
 }' http://localhost:3000/users/register
 ```
 
+### Register third user (with passwordConfirm for validation)
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{
+    "firstName": "Aimar",
+    "lastName": "Moreno",
+    "email": "aimar@mail.com",
+    "password": "ferias",
+    "passwordConfirm": "ferias"
+}' http://localhost:3000/users/register
+```
+
 ### Log user in
 
 ```bash

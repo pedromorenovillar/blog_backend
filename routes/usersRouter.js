@@ -7,16 +7,18 @@ import {
 } from "../controllers/usersController.js";
 import { getAccessToken } from "../controllers/authController.js";
 import passport from "passport";
-// import { validateRegistration } from "../validators/validateRegistration.js";
-// import { validateLogin } from "../validators/validateLogin.js";
+import {
+  validateLogin,
+  validateRegistration,
+} from "../validators/usersValidator.js";
 
 const usersRouter = Router();
 
-usersRouter.post("/register", registerUser);
+usersRouter.post("/register", validateRegistration, registerUser);
 
 usersRouter.delete("/delete", deleteAllUsers);
 
-usersRouter.post("/login", loginUser);
+usersRouter.post("/login", validateLogin, loginUser);
 
 usersRouter.post("/logout", logoutUser);
 
