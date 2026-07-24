@@ -2,6 +2,20 @@
 
 ## Post queries
 
+### Comment post (Ainhoa on Pedro's)
+
+```bash
+curl -X POST http://localhost:3000/comments \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" \
+  -d '{
+    "postId": 1,
+    "content": "Great post! I really enjoyed reading it."
+  }'
+```
+
+## Post queries
+
 ### Unpublish post by id
 
 ```bash
