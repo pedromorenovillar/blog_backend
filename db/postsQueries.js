@@ -10,6 +10,7 @@ export async function insertPost(userId, title, slug, content) {
     },
   });
 }
+
 export async function findPostsByAuthorId(userId) {
   return prisma.post.findMany({
     where: { authorId: userId },
@@ -18,6 +19,7 @@ export async function findPostsByAuthorId(userId) {
     },
   });
 }
+
 export async function findPublishedPosts() {
   return prisma.post.findMany({
     where: {
@@ -26,5 +28,11 @@ export async function findPublishedPosts() {
     orderBy: {
       createdAt: "desc",
     },
+  });
+}
+
+export async function findPostByPostId(postId) {
+  return prisma.post.findFirst({
+    where: { id: postId },
   });
 }

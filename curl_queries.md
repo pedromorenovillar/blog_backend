@@ -2,6 +2,12 @@
 
 ## Post queries
 
+### Get single post by Id
+
+```bash
+curl http://localhost:3000/posts/3
+```
+
 ### Get all published posts
 
 ```bash

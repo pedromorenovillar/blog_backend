@@ -3,6 +3,7 @@ import {
   insertPost,
   findPostsByAuthorId,
   findPublishedPosts,
+  findPostByPostId,
 } from "../db/postsQueries.js";
 
 export async function createPost(req, res, next) {
@@ -15,10 +16,10 @@ export async function createPost(req, res, next) {
     const slug = slugify(title, { lower: true, strict: true });
 
     // Store post
-    const result = await insertPost(userId, title, slug, content);
+    const post = await insertPost(userId, title, slug, content);
 
     res.status(201).json({
-      result,
+      post,
     });
   } catch (error) {
     next(error);
@@ -31,21 +32,35 @@ export async function getAllUserPosts(req, res, next) {
     const userId = req.user.id;
 
     // Get all posts
-    const result = await findPostsByAuthorId(userId);
+    const posts = await findPostsByAuthorId(userId);
     res.json({
-      result,
+      posts,
     });
   } catch (error) {
     next(error);
   }
 }
+
 export async function getAllPublishedPosts(req, res, next) {
   try {
     // Get all posts
-    const result = await findPublishedPosts();
-    console.log({ result });
+    const posts = await findPublishedPosts();
     res.json({
-      result,
+      posts,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getSinglePost(req, res, next) {
+  try {
+    // Retrieve id from params and convert it to int
+    const postId = Number(req.params.id);
+    // Get single post
+    const post = await findPostByPostId(postId);
+    res.json({
+      post,
     });
   } catch (error) {
     next(error);

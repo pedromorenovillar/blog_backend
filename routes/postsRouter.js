@@ -5,6 +5,7 @@ import {
   createPost,
   getAllUserPosts,
   getAllPublishedPosts,
+  getSinglePost,
 } from "../controllers/postsController.js";
 // import { validatePost } from "../validators/postsValidator.js";
 
@@ -12,11 +13,11 @@ const postsRouter = Router();
 
 postsRouter.post("/me", isAuth, createPost);
 
-postsRouter.get("/", getAllPublishedPosts);
-
 postsRouter.get("/me", isAuth, getAllUserPosts);
 
-// TODO read one post
+postsRouter.get("/", getAllPublishedPosts);
+
+postsRouter.get("/:id", getSinglePost)
 
 // TODO update post
 
