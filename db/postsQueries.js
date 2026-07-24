@@ -36,3 +36,16 @@ export async function findPostByPostId(postId) {
     where: { id: postId },
   });
 }
+
+export async function updatePostByPostId(postId, title, slug, content) {
+  return prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      title,
+      slug,
+      content,
+    },
+  });
+}

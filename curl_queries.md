@@ -2,6 +2,14 @@
 
 ## Post queries
 
+### Update post by id
+
+```bash
+curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" -d '{
+    "title": "Ainhoa'\''s second post updated again",
+    "content": "Se me ha ido el santo al cielo"
+}' http://localhost:3000/posts/2
+
 ### Get single post by Id
 
 ```bash
