@@ -1,14 +1,19 @@
 import { Router } from "express";
 import passport from "passport";
-// import {} from "../controllers/postsController.js";
-// import { validatePost } from "../validators/validatePost.js";
+import { isAuth } from "../middleware/auth.js";
+import { createPost } from "../controllers/postsController.js";
+// import { validatePost } from "../validators/postsValidator.js";
 
 const postsRouter = Router();
 
-// TODO create post
+postsRouter.post("/", isAuth, createPost);
+
 // TODO read post
+
 // TODO update post
+
 // TODO delete post
+
 // TODO publish post
 
 export { postsRouter };
