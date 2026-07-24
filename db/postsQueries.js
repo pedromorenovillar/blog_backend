@@ -57,3 +57,14 @@ export async function deletePostById(postId) {
     },
   });
 }
+
+export async function updatePostPublishedStatus(postId, isPublished) {
+  return prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      isPublished,
+    },
+  });
+}

@@ -8,7 +8,9 @@ import {
   getAllPublishedPosts,
   getSinglePost,
   updatePost,
-  deletePost
+  deletePost,
+  publishPost,
+  unpublishPost,
 } from "../controllers/postsController.js";
 // import { validatePost } from "../validators/postsValidator.js";
 
@@ -20,15 +22,14 @@ postsRouter.get("/me", isAuth, getAllUserPosts);
 
 postsRouter.get("/", getAllPublishedPosts);
 
-postsRouter.get("/:id", getSinglePost)
+postsRouter.get("/:id", getSinglePost);
 
-postsRouter.put("/:id", isAuth, isPostOwner, updatePost)
+postsRouter.put("/:id", isAuth, isPostOwner, updatePost);
 
-// TODO delete post
-postsRouter.delete("/:id", isAuth, isPostOwner, deletePost)
+postsRouter.delete("/:id", isAuth, isPostOwner, deletePost);
 
-// TODO publish post
+postsRouter.patch("/:id/publish", isAuth, isPostOwner, publishPost);
 
-// TODO unpublish post
+postsRouter.patch("/:id/unpublish", isAuth, isPostOwner, unpublishPost);
 
 export { postsRouter };

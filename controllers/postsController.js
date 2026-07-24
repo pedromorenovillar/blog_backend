@@ -5,7 +5,8 @@ import {
   findPublishedPosts,
   findPostById,
   updatePostById,
-  deletePostById
+  deletePostById,
+  updatePostPublishedStatus,
 } from "../db/postsQueries.js";
 
 export async function createPost(req, res, next) {
@@ -84,10 +85,32 @@ export async function deletePost(req, res, next) {
     // Get post
     const postId = req.post.id;
     // Delete post
-    const deletedPost = await deletePostById(postId)
+    const deletedPost = await deletePostById(postId);
     res.json(deletedPost);
   } catch (error) {
     next(error);
   }
-  
+}
+
+export async function publishPost(req, res, next) {
+  try {
+    // Get post
+    const postId = req.post.id;
+    // Change isPublished status
+    const publishedPost = await updatePostPublishedStatus(postId, true);
+    res.json(publishedPost);
+  } catch (error) {
+    next(error);
+  }
+}
+export async function unpublishPost(req, res, next) {
+  try {
+    // Get post
+    const postId = req.post.id;
+    // Change isPublished status
+    const publishedPost = await updatePostPublishedStatus(postId, false);
+    res.json(publishedPost);
+  } catch (error) {
+    next(error);
+  }
 }
