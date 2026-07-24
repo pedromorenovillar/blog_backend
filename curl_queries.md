@@ -2,6 +2,11 @@
 
 ## Post queries
 
+### Delete post by id
+
+````bash
+curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" http://localhost:3000/posts/2
+
 ### Update post by id
 
 ```bash
@@ -14,7 +19,7 @@ curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbG
 
 ```bash
 curl http://localhost:3000/posts/3
-```
+````
 
 ### Get all published posts
 

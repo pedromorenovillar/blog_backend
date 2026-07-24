@@ -7,7 +7,8 @@ import {
   getAllUserPosts,
   getAllPublishedPosts,
   getSinglePost,
-  updatePost
+  updatePost,
+  deletePost
 } from "../controllers/postsController.js";
 // import { validatePost } from "../validators/postsValidator.js";
 
@@ -21,10 +22,10 @@ postsRouter.get("/", getAllPublishedPosts);
 
 postsRouter.get("/:id", getSinglePost)
 
-// TODO update post
 postsRouter.put("/:id", isAuth, isPostOwner, updatePost)
 
 // TODO delete post
+postsRouter.delete("/:id", isAuth, isPostOwner, deletePost)
 
 // TODO publish post
 

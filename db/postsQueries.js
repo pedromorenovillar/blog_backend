@@ -31,13 +31,13 @@ export async function findPublishedPosts() {
   });
 }
 
-export async function findPostByPostId(postId) {
+export async function findPostById(postId) {
   return prisma.post.findFirst({
     where: { id: postId },
   });
 }
 
-export async function updatePostByPostId(postId, title, slug, content) {
+export async function updatePostById(postId, title, slug, content) {
   return prisma.post.update({
     where: {
       id: postId,
@@ -46,6 +46,14 @@ export async function updatePostByPostId(postId, title, slug, content) {
       title,
       slug,
       content,
+    },
+  });
+}
+
+export async function deletePostById(postId) {
+  return prisma.post.delete({
+    where: {
+      id: postId,
     },
   });
 }

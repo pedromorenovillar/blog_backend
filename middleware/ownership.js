@@ -1,4 +1,4 @@
-import { findPostByPostId } from "../db/postsQueries.js";
+import { findPostById } from "../db/postsQueries.js";
 
 export async function isPostOwner(req, res, next) {
   try {
@@ -8,7 +8,7 @@ export async function isPostOwner(req, res, next) {
       error.status = 400;
       throw error;
     }
-    const post = await findPostByPostId(postId);
+    const post = await findPostById(postId);
 
     if (!post) {
       const error = new Error("Post not found");
