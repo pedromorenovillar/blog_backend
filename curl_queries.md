@@ -2,7 +2,15 @@
 
 ## Comment queries
 
-### Comment post (Ainhoa on Pedro's)
+### Delete comment
+
+```bash
+curl -X DELETE http://localhost:3000/comments/3 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDk3OTUwNiwiZXhwIjoxNzg1MDY1OTA2fQ.aHPrXJrnpSOZ82SsW80w94uy1oBuJ-47mej6SXtR5k4"
+```
+
+### Create comment (Ainhoa on Pedro's)
 
 ```bash
 curl -X POST http://localhost:3000/comments \

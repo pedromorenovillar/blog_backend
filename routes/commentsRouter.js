@@ -13,10 +13,8 @@ const commentsRouter = Router();
 
 commentsRouter.post("/", isAuth, createComment);
 
-// TODO update comment
 commentsRouter.put("/:id", isAuth, isCommentOwner, updateComment);
 
-// TODO delete comment
 commentsRouter.delete("/:id", isAuth, isCommentOwner, deleteComment);
 
 export { commentsRouter };

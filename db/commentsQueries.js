@@ -10,10 +10,10 @@ export async function insertComment(authorId, postId, content) {
   });
 }
 
-export async function findCommentById(commentId) {
+export async function findCommentById(id) {
   return prisma.comment.findUnique({
     where: {
-      id: commentId,
+      id,
     },
   });
 }
@@ -22,6 +22,14 @@ export async function findAllComments() {
   return prisma.comment.findMany({
     orderBy: {
       createdAt: "desc",
+    },
+  });
+}
+
+export async function deleteCommentById(id) {
+  return prisma.comment.delete({
+    where: {
+      id,
     },
   });
 }

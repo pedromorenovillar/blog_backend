@@ -45,7 +45,7 @@ export async function getAllPublishedPosts(req, res, next) {
   try {
     // Get all posts
     const posts = await findPublishedPosts();
-    res.status(200).json(posts);
+    res.json(posts);
   } catch (error) {
     next(error);
   }
@@ -130,7 +130,7 @@ export async function getPostComments(req, res, next) {
     // Change isPublished status
     const comments = await findAllPostComments(postId);
 
-    res.status(200).json(comments);
+    res.json(comments);
   } catch (error) {
     next(error);
   }

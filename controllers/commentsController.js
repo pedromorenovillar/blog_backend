@@ -2,6 +2,7 @@ import {
   insertComment,
   findCommentById,
   findAllComments,
+  deleteCommentById
 } from "../db/commentsQueries.js";
 import { findPostById } from "../db/postsQueries.js";
 
@@ -21,7 +22,18 @@ export async function createComment(req, res, next) {
 }
 
 export async function updateComment(params) {}
-export async function deleteComment(params) {}
+
+export async function deleteComment(req, res, next) {
+  try {
+      // Get comment
+      const commentId = req.comment.id;
+      // Delete comment
+      const deletedComment = await deleteCommentById(commentId);
+      res.json(deletedComment);
+    } catch (error) {
+      next(error);
+    }
+}
 
 async function ensureCommentablePost(postId) {
   const post = await findPostById(postId);
