@@ -1,12 +1,19 @@
 import prisma from "../lib/prisma.js";
 
-
 export async function insertComment(authorId, postId, content) {
   return prisma.comment.create({
     data: {
       authorId,
       postId,
       content,
+    },
+  });
+}
+
+export async function findCommentById(commentId) {
+  return prisma.comment.findFirst({
+    where: {
+      id: commentId,
     },
   });
 }

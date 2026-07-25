@@ -2,6 +2,12 @@
 
 ## Post queries
 
+### Read comments
+
+```bash
+curl http://localhost:3000/comments/1
+````
+
 ### Comment post (Ainhoa on Pedro's)
 
 ```bash
