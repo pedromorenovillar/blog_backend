@@ -2,9 +2,11 @@ import { Router } from "express";
 import passport from "passport";
 import {
   createComment,
-  updateComment
+  updateComment,
+  deleteComment,
 } from "../controllers/commentsController.js";
 import { isAuth } from "../middleware/auth.js";
+import { isCommentOwner } from "../middleware/ownership.js";
 // import { validateComment } from "../validators/commentsValidator.js";
 
 const commentsRouter = Router();
@@ -12,8 +14,9 @@ const commentsRouter = Router();
 commentsRouter.post("/", isAuth, createComment);
 
 // TODO update comment
-commentsRouter.put("/:id", isAuth, updateComment)
+commentsRouter.put("/:id", isAuth, isCommentOwner, updateComment);
 
 // TODO delete comment
+commentsRouter.delete("/:id", isAuth, isCommentOwner, deleteComment);
 
 export { commentsRouter };

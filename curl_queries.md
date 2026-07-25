@@ -1,12 +1,6 @@
 # Curl queries
 
-## Post queries
-
-### Read comments
-
-```bash
-curl http://localhost:3000/comments/1
-````
+## Comment queries
 
 ### Comment post (Ainhoa on Pedro's)
 
@@ -21,6 +15,12 @@ curl -X POST http://localhost:3000/comments \
 ```
 
 ## Post queries
+
+### Read comments from post
+
+```bash
+curl http://localhost:3000/posts/1/comments
+```
 
 ### Unpublish post by id
 

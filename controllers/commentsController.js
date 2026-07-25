@@ -21,6 +21,7 @@ export async function createComment(req, res, next) {
 }
 
 export async function updateComment(params) {}
+export async function deleteComment(params) {}
 
 async function ensureCommentablePost(postId) {
   const post = await findPostById(postId);

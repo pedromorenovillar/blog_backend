@@ -57,7 +57,7 @@ export async function getSinglePost(req, res, next) {
     const postId = Number(req.params.id);
     // Get single post
     const post = await findPostById(postId);
-    res.status(200).json(post);
+    res.json(post);
   } catch (error) {
     next(error);
   }
