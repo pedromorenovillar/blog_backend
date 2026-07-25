@@ -2,7 +2,7 @@ import { body } from "express-validator";
 import { handleValidationErrors } from "./handleValidationerrors.js";
 import { findUserByEmail } from "../db/usersQueries.js";
 
-const registryValidation = [
+const registrationValidation = [
   body("firstName")
     .trim()
     .notEmpty()
@@ -51,7 +51,7 @@ const loginValidation = [
 ];
 
 export const validateRegistration = [
-  ...registryValidation,
+  ...registrationValidation,
   handleValidationErrors
 ]
 export const validateLogin = [

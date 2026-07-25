@@ -17,14 +17,16 @@ const createPostValidation = [
     .withMessage("Content cannot be longer than 3000 characters."),
 ];
 
-const updatePostValidation = [
+const postIdValidation = [
   param("id").isInt({ min: 1 }).withMessage("Invalid post id."),
 ];
 
 export const validatePost = [...createPostValidation, handleValidationErrors];
 
 export const validateUpdatePost = [
-  ...updatePostValidation,
+  ...postIdValidation,
   ...createPostValidation,
   handleValidationErrors,
 ];
+
+export const validatePostId = [...postIdValidation, handleValidationErrors];

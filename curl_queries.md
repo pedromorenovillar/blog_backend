@@ -21,12 +21,23 @@ curl -X DELETE http://localhost:3000/comments/3 \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDk3OTUwNiwiZXhwIjoxNzg1MDY1OTA2fQ.aHPrXJrnpSOZ82SsW80w94uy1oBuJ-47mej6SXtR5k4"
 ```
 
+### Create comment over 3000 chars
+
+`````bash
+
+curl -X POST http://localhost:3000/comments \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDk3OTUwNiwiZXhwIjoxNzg1MDY1OTA2fQ.aHPrXJrnpSOZ82SsW80w94uy1oBuJ-47mej6SXtR5k4" \
+  -H "Content-Type: application/json" \
+  -d "$(python3 -c 'import json; print(json.dumps({"postId": 1, "content": "a" * 3100}))')"
+```
+
 ### Create comment (Ainhoa on Pedro's)
 
 ```bash
 curl -X POST http://localhost:3000/comments \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDk3OTUwNiwiZXhwIjoxNzg1MDY1OTA2fQ.aHPrXJrnpSOZ82SsW80w94uy1oBuJ-47mej6SXtR5k4" \
   -d '{
     "postId": 1,
     "content": "Great post! I really enjoyed reading it."
@@ -70,7 +81,7 @@ curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbG
 
 ```bash
 curl http://localhost:3000/posts/3
-````
+`````
 
 ### Get all published posts
 

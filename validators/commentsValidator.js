@@ -8,9 +8,10 @@ const createCommentValidation = [
     .withMessage("Content is required.")
     .isLength({ max: 3000 })
     .withMessage("Content cannot be longer than 3000 characters."),
+  body("postId").isInt({ min: 1 }).withMessage("Invalid post id."),
 ];
 
-const updateCommentValidation = [
+const commentIdValidation = [
   param("id").isInt({ min: 1 }).withMessage("Invalid comment id."),
 ];
 
@@ -20,7 +21,12 @@ export const validateComment = [
 ];
 
 export const validateUpdateComment = [
-  ...updateCommentValidation,
+  ...commentIdValidation,
   ...createCommentValidation,
+  handleValidationErrors,
+];
+
+export const validateCommentId = [
+  ...commentIdValidation,
   handleValidationErrors,
 ];

@@ -6,7 +6,6 @@ import {
   deleteAllUsers,
 } from "../controllers/usersController.js";
 import { getAccessToken } from "../controllers/authController.js";
-import passport from "passport";
 import {
   validateLogin,
   validateRegistration,

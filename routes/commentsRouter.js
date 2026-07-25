@@ -1,5 +1,4 @@
 import { Router } from "express";
-import passport from "passport";
 import {
   createComment,
   updateComment,
@@ -10,7 +9,9 @@ import { isCommentOwner } from "../middleware/ownership.js";
 import {
   validateComment,
   validateUpdateComment,
+  validateCommentId
 } from "../validators/commentsValidator.js";
+
 
 const commentsRouter = Router();
 
@@ -19,11 +20,18 @@ commentsRouter.post("/", isAuth, validateComment, createComment);
 commentsRouter.put(
   "/:id",
   isAuth,
-  isCommentOwner,
+  validateCommentId,
   validateUpdateComment,
+  isCommentOwner,
   updateComment,
 );
 
-commentsRouter.delete("/:id", isAuth, isCommentOwner, deleteComment);
+commentsRouter.delete(
+  "/:id",
+  isAuth,
+  validateCommentId,
+  isCommentOwner,
+  deleteComment,
+);
 
 export { commentsRouter };
