@@ -7,6 +7,7 @@ import {
   updatePostById,
   deletePostById,
   updatePostPublishedStatus,
+  findAllPostComments,
 } from "../db/postsQueries.js";
 
 export async function createPost(req, res, next) {
@@ -44,7 +45,7 @@ export async function getAllPublishedPosts(req, res, next) {
   try {
     // Get all posts
     const posts = await findPublishedPosts();
-    res.json(posts);
+    res.status(200).json(posts);
   } catch (error) {
     next(error);
   }
@@ -56,7 +57,7 @@ export async function getSinglePost(req, res, next) {
     const postId = Number(req.params.id);
     // Get single post
     const post = await findPostById(postId);
-    res.json(post);
+    res.status(200).json(post);
   } catch (error) {
     next(error);
   }
@@ -110,6 +111,26 @@ export async function unpublishPost(req, res, next) {
     // Change isPublished status
     const publishedPost = await updatePostPublishedStatus(postId, false);
     res.json(publishedPost);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getPostComments(req, res, next) {
+  try {
+    // Get post
+    const postId = Number(req.params.id);
+    const post = await findPostById(postId);
+
+    if (!post) {
+      const error = new Error("Post not found");
+      error.status = 404;
+      throw error;
+    }
+    // Change isPublished status
+    const comments = await findAllPostComments(postId);
+
+    res.status(200).json(comments);
   } catch (error) {
     next(error);
   }

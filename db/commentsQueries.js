@@ -11,7 +11,7 @@ export async function insertComment(authorId, postId, content) {
 }
 
 export async function findCommentById(commentId) {
-  return prisma.comment.findFirst({
+  return prisma.comment.findUnique({
     where: {
       id: commentId,
     },

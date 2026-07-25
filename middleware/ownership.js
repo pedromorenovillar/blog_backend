@@ -2,6 +2,7 @@ import { findPostById } from "../db/postsQueries.js";
 
 export async function isPostOwner(req, res, next) {
   try {
+    console.log("isPostOwner", req.params);
     const postId = Number(req.params.id);
     if (Number.isNaN(postId)) {
       const error = new Error("Invalid post id");

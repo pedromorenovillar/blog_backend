@@ -11,6 +11,7 @@ import {
   deletePost,
   publishPost,
   unpublishPost,
+  getPostComments,
 } from "../controllers/postsController.js";
 
 import {
@@ -35,5 +36,7 @@ postsRouter.delete("/:id", isAuth, isPostOwner, deletePost);
 postsRouter.patch("/:id/publish", isAuth, isPostOwner, publishPost);
 
 postsRouter.patch("/:id/unpublish", isAuth, isPostOwner, unpublishPost);
+
+postsRouter.get("/:id/comments", getPostComments);
 
 export { postsRouter };

@@ -32,7 +32,7 @@ export async function findPublishedPosts() {
 }
 
 export async function findPostById(postId) {
-  return prisma.post.findFirst({
+  return prisma.post.findUnique({
     where: { id: postId },
   });
 }
@@ -65,6 +65,17 @@ export async function updatePostPublishedStatus(postId, isPublished) {
     },
     data: {
       isPublished,
+    },
+  });
+}
+
+export async function findAllPostComments(postId) {
+  return prisma.comment.findMany({
+    where: {
+      postId,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 }
