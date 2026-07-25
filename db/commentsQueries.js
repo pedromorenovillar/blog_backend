@@ -17,3 +17,11 @@ export async function findCommentById(commentId) {
     },
   });
 }
+
+export async function findAllComments() {
+  return prisma.comment.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}

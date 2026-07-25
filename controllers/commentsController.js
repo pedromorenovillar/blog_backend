@@ -1,4 +1,4 @@
-import { insertComment, findCommentById } from "../db/commentsQueries.js";
+import { insertComment, findCommentById, findAllComments } from "../db/commentsQueries.js";
 import { findPostById } from "../db/postsQueries.js";
 
 export async function createComment(req, res, next) {
@@ -23,6 +23,16 @@ export async function readComment(req, res, next) {
     // Get comment
     const comment = await findCommentById(commentId);
     res.status(201).json(comment);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function readAllComments(req, res, next) {
+  try {
+    // Get comments
+    const comments = await findAllComments();
+    res.status(201).json(comments);
   } catch (error) {
     next(error);
   }
