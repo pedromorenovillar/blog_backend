@@ -28,9 +28,9 @@ app.use(cookieParser());
 app.get("/", (req, res) => {
   res.json({ message: "API running" });
 });
-app.use("/users", usersRouter);
-app.use("/posts", postsRouter);
-app.use("/comments", commentsRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/posts", postsRouter);
+app.use("/api/comments", commentsRouter);
 
 /* ===========================
    App config 2/2

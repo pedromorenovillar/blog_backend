@@ -19,10 +19,7 @@ export const registerUser = async (req, res, next) => {
     const hash = await hashString(user.password);
 
     const result = await insertUser(user, hash);
-    res.json({
-      message: `User ${user.email} added to the DB!`,
-      result: result,
-    });
+    res.status(201).json(result);
   } catch (error) {
     next(error);
   }
@@ -53,11 +50,7 @@ export async function loginUser(req, res, next) {
     const expirationDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const hashedRefreshToken = await hashString(refreshToken);
     // Store hashedRefreshToken in the database
-    const result = await addRefreshToken(
-      user.id,
-      hashedRefreshToken,
-      expirationDate,
-    );
+    await addRefreshToken(user.id, hashedRefreshToken, expirationDate);
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // <-- browser will only send that cookie over HTTPS
@@ -100,7 +93,7 @@ export async function logoutUser(req, res, next) {
     }
 
     // Delete the matching token
-    const result = await deleteRefreshToken(payload.sub);
+    await deleteRefreshToken(payload.sub);
 
     // Clear the cookie
     res.clearCookie("refreshToken", {
@@ -114,10 +107,15 @@ export async function logoutUser(req, res, next) {
   }
 }
 
-export async function deleteAllUsers(req, res) {
-  const result = await deleteUsers();
-  res.json({
-    message: `All users deleted from the DB!`,
-    result: result,
-  });
+export async function deleteAllUsers(req, res, next) {
+  try {
+    const result = await deleteUsers();
+
+    res.json({
+      message: "All users deleted.",
+      result,
+    });
+  } catch (error) {
+    next(error);
+  }
 }

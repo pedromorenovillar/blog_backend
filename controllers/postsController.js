@@ -57,6 +57,11 @@ export async function getSinglePost(req, res, next) {
     const postId = Number(req.params.id);
     // Get single post
     const post = await findPostById(postId);
+    if (!post || !post.isPublished) {
+      const error = new Error("Post not found");
+      error.status = 404;
+      throw error;
+    }
     res.json(post);
   } catch (error) {
     next(error);
@@ -98,8 +103,8 @@ export async function publishPost(req, res, next) {
     // Get post
     const postId = req.post.id;
     // Change isPublished status
-    const publishedPost = await updatePostPublishedStatus(postId, true);
-    res.json(publishedPost);
+    const post = await updatePostPublishedStatus(postId, true);
+    res.json(post);
   } catch (error) {
     next(error);
   }
@@ -109,8 +114,8 @@ export async function unpublishPost(req, res, next) {
     // Get post
     const postId = req.post.id;
     // Change isPublished status
-    const publishedPost = await updatePostPublishedStatus(postId, false);
-    res.json(publishedPost);
+    const post = await updatePostPublishedStatus(postId, false);
+    res.json(post);
   } catch (error) {
     next(error);
   }
@@ -122,7 +127,7 @@ export async function getPostComments(req, res, next) {
     const postId = Number(req.params.id);
     const post = await findPostById(postId);
 
-    if (!post) {
+    if (!post || !post.isPublished) {
       const error = new Error("Post not found");
       error.status = 404;
       throw error;

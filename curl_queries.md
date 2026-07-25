@@ -5,7 +5,7 @@
 ### Update comment
 
 ```bash
-curl -X PUT http://localhost:3000/comments/1 \
+curl -X PUT http://localhost:3000/api/comments/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDk3OTUwNiwiZXhwIjoxNzg1MDY1OTA2fQ.aHPrXJrnpSOZ82SsW80w94uy1oBuJ-47mej6SXtR5k4" \
   -d '{
@@ -16,7 +16,7 @@ curl -X PUT http://localhost:3000/comments/1 \
 ### Delete comment
 
 ```bash
-curl -X DELETE http://localhost:3000/comments/3 \
+curl -X DELETE http://localhost:3000/api/comments/3 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDk3OTUwNiwiZXhwIjoxNzg1MDY1OTA2fQ.aHPrXJrnpSOZ82SsW80w94uy1oBuJ-47mej6SXtR5k4"
 ```
@@ -25,7 +25,7 @@ curl -X DELETE http://localhost:3000/comments/3 \
 
 `````bash
 
-curl -X POST http://localhost:3000/comments \
+curl -X POST http://localhost:3000/api/comments \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDk3OTUwNiwiZXhwIjoxNzg1MDY1OTA2fQ.aHPrXJrnpSOZ82SsW80w94uy1oBuJ-47mej6SXtR5k4" \
   -H "Content-Type: application/json" \
@@ -35,7 +35,7 @@ curl -X POST http://localhost:3000/comments \
 ### Create comment (Ainhoa on Pedro's)
 
 ```bash
-curl -X POST http://localhost:3000/comments \
+curl -X POST http://localhost:3000/api/comments \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDk3OTUwNiwiZXhwIjoxNzg1MDY1OTA2fQ.aHPrXJrnpSOZ82SsW80w94uy1oBuJ-47mej6SXtR5k4" \
   -d '{
@@ -49,25 +49,25 @@ curl -X POST http://localhost:3000/comments \
 ### Read comments from post
 
 ```bash
-curl http://localhost:3000/posts/1/comments
+curl http://localhost:3000/api/posts/1/comments
 ```
 
 ### Unpublish post by id
 
 ```bash
-curl -X PATCH -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" http://localhost:3000/posts/5/unpublish
+curl -X PATCH -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" http://localhost:3000/api/posts/5/unpublish
 ```
 
 ### Publish post by id
 
 ```bash
-curl -X PATCH -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" http://localhost:3000/posts/5/publish
+curl -X PATCH -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" http://localhost:3000/api/posts/5/publish
 ```
 
 ### Delete post by id
 
 ````bash
-curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" http://localhost:3000/posts/2
+curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" http://localhost:3000/api/posts/2
 
 ### Update post by id
 
@@ -75,18 +75,18 @@ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer eyJ
 curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" -d '{
     "title": "Ainhoa'\''s second post updated again",
     "content": "Se me ha ido el santo al cielo"
-}' http://localhost:3000/posts/2
+}' http://localhost:3000/api/posts/2
 
 ### Get single post by Id
 
 ```bash
-curl http://localhost:3000/posts/3
+curl http://localhost:3000/api/posts/3
 `````
 
 ### Get all published posts
 
 ```bash
-curl http://localhost:3000/posts
+curl http://localhost:3000/api/posts
 ```
 
 ### Create post Ainhoa
@@ -95,7 +95,7 @@ curl http://localhost:3000/posts
 curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDg4ODkxNSwiZXhwIjoxNzg0OTc1MzE1fQ.-vlxhPkcGFAhnJPHtYCxdJyNfWuz3da8gY2frRwXfC0" -d '{
     "title": "My second post (Ainhoa)",
     "content": "No sé ni qué contar"
-}' http://localhost:3000/posts/me
+}' http://localhost:3000/api/posts/me
 ```
 
 ### Create another post
@@ -104,13 +104,13 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhb
 curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImlhdCI6MTc4NDg4MzkwMywiZXhwIjoxNzg0OTcwMzAzfQ.84ozpX848_FCIt-y68IUA1xLo81pIhCk88wwPPLcdO0" -d '{
     "title": "Primer blog de Pedro",
     "content": "No sé ni qué contar"
-}' http://localhost:3000/posts/me
+}' http://localhost:3000/api/posts/me
 ```
 
 ### Get all posts from user
 
 ```bash
-curl -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImlhdCI6MTc4NDg4MzkwMywiZXhwIjoxNzg0OTcwMzAzfQ.84ozpX848_FCIt-y68IUA1xLo81pIhCk88wwPPLcdO0" http://localhost:3000/posts/me
+curl -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImlhdCI6MTc4NDg4MzkwMywiZXhwIjoxNzg0OTcwMzAzfQ.84ozpX848_FCIt-y68IUA1xLo81pIhCk88wwPPLcdO0" http://localhost:3000/api/posts/me
 ```
 
 ## User queries
@@ -118,7 +118,7 @@ curl -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIU
 ### Delete all users
 
 ```bash
-curl -X DELETE http://localhost:3000/users/delete
+curl -X DELETE http://localhost:3000/api/users/delete
 ```
 
 ### Register user
@@ -129,7 +129,7 @@ curl -X POST -H "Content-Type: application/json" -d '{
     "lastName": "Bernad",
     "email": "ainhoa@gmail.com",
     "password": "lacucaracha"
-}' http://localhost:3000/users/register
+}' http://localhost:3000/api/users/register
 ```
 
 ### Register another user
@@ -140,7 +140,7 @@ curl -X POST -H "Content-Type: application/json" -d '{
     "lastName": "Moreno",
     "email": "pedro@mail.com",
     "password": "lacucaracha"
-}' http://localhost:3000/users/register
+}' http://localhost:3000/api/users/register
 ```
 
 ### Register third user (with passwordConfirm for validation)
@@ -152,13 +152,13 @@ curl -X POST -H "Content-Type: application/json" -d '{
     "email": "aimar@mail.com",
     "password": "ferias",
     "passwordConfirm": "ferias"
-}' http://localhost:3000/users/register
+}' http://localhost:3000/api/users/register
 ```
 
 ### Log user in
 
 ```bash
-curl -X POST http://localhost:3000/users/login \
+curl -X POST http://localhost:3000/api/users/login \
   -H "Content-Type: application/json" \
   -d '{"email":"ainhoa@gmail.com","password":"lacucaracha"}' \
   -c cookies.txt
@@ -167,5 +167,5 @@ curl -X POST http://localhost:3000/users/login \
 ### Log user out
 
 ```bash
-curl -X POST http://localhost:3000/users/logout -b cookies.txt
+curl -X POST http://localhost:3000/api/users/logout -b cookies.txt
 ```

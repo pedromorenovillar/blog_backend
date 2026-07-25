@@ -1,7 +1,5 @@
 import {
   insertComment,
-  findCommentById,
-  findAllComments,
   deleteCommentById,
   updateCommentById
 } from "../db/commentsQueries.js";
@@ -53,8 +51,8 @@ export async function deleteComment(req, res, next) {
 async function ensureCommentablePost(postId) {
   const post = await findPostById(postId);
   if (!post) {
-    const error = new Error("Invalid post id");
-    error.status = 400;
+    const error = new Error("Post not found");
+    error.status = 404;
     throw error;
   }
   if (!post.isPublished) {
