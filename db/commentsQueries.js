@@ -33,3 +33,14 @@ export async function deleteCommentById(id) {
     },
   });
 }
+
+export async function updateCommentById(id, content) {
+  return prisma.comment.update({
+    where: {
+      id,
+    },
+    data: {
+      content,
+    },
+  });
+}

@@ -2,6 +2,17 @@
 
 ## Comment queries
 
+### Update comment
+
+```bash
+curl -X PUT http://localhost:3000/comments/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NDk3OTUwNiwiZXhwIjoxNzg1MDY1OTA2fQ.aHPrXJrnpSOZ82SsW80w94uy1oBuJ-47mej6SXtR5k4" \
+  -d '{
+    "content": "On second thought, I do not think it was that good..."
+  }'
+```
+
 ### Delete comment
 
 ```bash

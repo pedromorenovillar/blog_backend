@@ -2,7 +2,8 @@ import {
   insertComment,
   findCommentById,
   findAllComments,
-  deleteCommentById
+  deleteCommentById,
+  updateCommentById
 } from "../db/commentsQueries.js";
 import { findPostById } from "../db/postsQueries.js";
 
@@ -21,18 +22,32 @@ export async function createComment(req, res, next) {
   }
 }
 
-export async function updateComment(params) {}
+export async function updateComment(req, res, next) {
+  try {
+    // Get post
+    const commentId = req.comment.id;
+    // Get content
+    const { content } = req.body;
+
+    // Store comment
+    const comment = await updateCommentById(commentId, content);
+
+    res.json(comment);
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function deleteComment(req, res, next) {
   try {
-      // Get comment
-      const commentId = req.comment.id;
-      // Delete comment
-      const deletedComment = await deleteCommentById(commentId);
-      res.json(deletedComment);
-    } catch (error) {
-      next(error);
-    }
+    // Get comment
+    const commentId = req.comment.id;
+    // Delete comment
+    const deletedComment = await deleteCommentById(commentId);
+    res.json(deletedComment);
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function ensureCommentablePost(postId) {
