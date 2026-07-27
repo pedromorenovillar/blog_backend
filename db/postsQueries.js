@@ -34,6 +34,24 @@ export async function findPublishedPosts() {
 export async function findPostById(postId) {
   return prisma.post.findUnique({
     where: { id: postId },
+    include: {
+      author: {
+        select: {
+          firstname: true,
+          lastname: true,
+        },
+      },
+      comments: {
+        include: {
+          author: {
+            select: {
+              firstname: true,
+              lastname: true,
+            },
+          },
+        },
+      },
+    },
   });
 }
 
