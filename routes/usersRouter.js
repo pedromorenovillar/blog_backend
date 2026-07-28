@@ -4,12 +4,14 @@ import {
   logoutUser,
   loginUser,
   deleteAllUsers,
+  getUser
 } from "../controllers/usersController.js";
 import { getAccessToken } from "../controllers/authController.js";
 import {
   validateLogin,
   validateRegistration,
 } from "../validators/usersValidator.js";
+import { isAuth } from "../middleware/auth.js";
 
 const usersRouter = Router();
 
@@ -19,10 +21,13 @@ usersRouter.delete("/delete", deleteAllUsers);
 
 usersRouter.post("/login", validateLogin, loginUser);
 
-usersRouter.post("/logout", logoutUser);
+usersRouter.post("/logout", isAuth, logoutUser);
 
 usersRouter.post("/token", getAccessToken);
 
+usersRouter.get("/me", isAuth, getUser)
+
+export { usersRouter };
 // TODO register GET route --> in frontend?
 // usersRouter.get("/register", (req, res) => {
 //   res.render("register", { title: "Register user" });
@@ -33,4 +38,3 @@ usersRouter.post("/token", getAccessToken);
 //   res.render("login", { title: "Log in" });
 // });
 
-export { usersRouter };

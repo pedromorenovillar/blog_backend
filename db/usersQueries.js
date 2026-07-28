@@ -9,6 +9,13 @@ export async function findUserByEmail(email) {
 export async function findUserById(id) {
   return prisma.user.findUnique({
     where: { id },
+    select: {
+      id: true,
+      firstname: true,
+      lastname: true,
+      email: true,
+      isAuthor: true,
+    }
   });
 }
 export async function insertUser(user, hash) {

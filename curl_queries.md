@@ -115,6 +115,12 @@ curl -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIU
 
 ## User queries
 
+### Get user
+
+```bash
+curl -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTc4NTIyNjU3NiwiZXhwIjoxNzg1MzEyOTc2fQ.UmnXWwvxzX5CYW121JRd4Gkr-pT42M0daLipjaErY7M" http://localhost:3000/api/users/me
+```
+
 ### Delete all users
 
 ```bash

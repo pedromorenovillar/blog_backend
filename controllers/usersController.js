@@ -5,6 +5,7 @@ import {
   insertUser,
   deleteUsers,
   findUserByEmail,
+  findUserById,
 } from "../db/usersQueries.js";
 import { generateAccessToken } from "./authController.js";
 import {
@@ -115,6 +116,18 @@ export async function deleteAllUsers(req, res, next) {
       message: "All users deleted.",
       result,
     });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getUser(req, res, next) {
+  try {
+    // Get user id
+    const userId = req.user.id;
+    // Find user
+    const foundUser = await findUserById(userId);
+    return res.json(foundUser);
   } catch (error) {
     next(error);
   }
