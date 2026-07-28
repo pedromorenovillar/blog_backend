@@ -4,7 +4,7 @@ import {
   logoutUser,
   loginUser,
   deleteAllUsers,
-  getUser
+  getUser,
 } from "../controllers/usersController.js";
 import { getAccessToken } from "../controllers/authController.js";
 import {
@@ -21,11 +21,11 @@ usersRouter.delete("/delete", deleteAllUsers);
 
 usersRouter.post("/login", validateLogin, loginUser);
 
-usersRouter.post("/logout", isAuth, logoutUser);
+usersRouter.post("/logout", logoutUser);
 
 usersRouter.post("/token", getAccessToken);
 
-usersRouter.get("/me", isAuth, getUser)
+usersRouter.get("/me", isAuth, getUser);
 
 export { usersRouter };
 // TODO register GET route --> in frontend?
@@ -37,4 +37,3 @@ export { usersRouter };
 // usersRouter.get("/login", (req, res) => {
 //   res.render("login", { title: "Log in" });
 // });
-
