@@ -15,7 +15,12 @@ config(); // <-- Load .env variables from dotenv module
 const PORT = process.env.PORT;
 const app = express(); // <-- Initialize express
 
-app.use(cors()); // <-- Allow cors
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+); // <-- Allow cors
 app.use(express.json()); // <-- Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // <-- Parse the data into req.body for post requests
 app.use(passport.initialize());
