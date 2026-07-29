@@ -20,8 +20,7 @@ export const registerUser = async (req, res, next) => {
     const hash = await hashString(user.password);
 
     const result = await insertUser(user, hash);
-    console.log(result);
-    res.status(201).json(result);
+    res.status(201).json({message: "User registered successfully"});
   } catch (error) {
     next(error);
   }
