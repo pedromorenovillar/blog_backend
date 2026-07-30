@@ -3,23 +3,19 @@ import { handleValidationErrors } from "./handleValidationerrors.js";
 import { findUserByEmail } from "../db/usersQueries.js";
 
 const registrationValidation = [
-  body("firstName")
-    .trim()
-    .notEmpty()
-    .withMessage("First name is required."),
+  body("firstName").trim().notEmpty().withMessage("First name is required."),
 
-  body("lastName")
-    .trim()
-    .notEmpty()
-    .withMessage("Last name is required."),
+  body("lastName").trim().notEmpty().withMessage("Last name is required."),
 
   body("email")
     .trim()
     .toLowerCase()
     .notEmpty()
     .withMessage("Email is required.")
+    .bail()
     .isEmail()
     .withMessage("Enter a valid email.")
+    .bail()
     .custom(async (value) => {
       const user = await findUserByEmail(value);
       if (user) {
@@ -42,6 +38,7 @@ const loginValidation = [
     .toLowerCase()
     .notEmpty()
     .withMessage("Email is required.")
+    .bail()
     .isEmail()
     .withMessage("Enter a valid email."),
 
@@ -52,9 +49,6 @@ const loginValidation = [
 
 export const validateRegistration = [
   ...registrationValidation,
-  handleValidationErrors
-]
-export const validateLogin = [
-  ...loginValidation,
-  handleValidationErrors
-]
+  handleValidationErrors,
+];
+export const validateLogin = [...loginValidation, handleValidationErrors];

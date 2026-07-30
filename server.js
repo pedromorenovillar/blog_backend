@@ -43,7 +43,9 @@ app.use("/api/comments", commentsRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(err.statusCode || 500).send(err.message);
+  res.status(err.statusCode || 500).json({
+    message: err.message,
+  });
 });
 
 app.listen(PORT, (error) => {
