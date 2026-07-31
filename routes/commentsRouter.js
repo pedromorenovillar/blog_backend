@@ -9,9 +9,8 @@ import { isCommentOwner } from "../middleware/ownership.js";
 import {
   validateComment,
   validateUpdateComment,
-  validateCommentId
+  validateCommentId,
 } from "../validators/commentsValidator.js";
-
 
 const commentsRouter = Router();
 

@@ -1,7 +1,7 @@
 import {
   insertComment,
   deleteCommentById,
-  updateCommentById
+  updateCommentById,
 } from "../db/commentsQueries.js";
 import { findPostById } from "../db/postsQueries.js";
 
