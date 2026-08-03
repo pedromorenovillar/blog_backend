@@ -16,6 +16,7 @@ const commentsRouter = Router();
 
 commentsRouter.post("/", isAuth, validateComment, createComment);
 
+// Not used
 commentsRouter.put(
   "/:id",
   isAuth,
