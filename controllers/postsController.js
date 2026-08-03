@@ -57,7 +57,7 @@ export async function getSinglePost(req, res, next) {
     const postId = Number(req.params.id);
     // Get single post
     const post = await findPostById(postId);
-    if (!post || !post.isPublished) {
+    if (!post) {
       const error = new Error("Post not found");
       error.status = 404;
       throw error;
