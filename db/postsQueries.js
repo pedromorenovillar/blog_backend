@@ -25,6 +25,14 @@ export async function findPublishedPosts() {
     where: {
       isPublished: true,
     },
+    include: {
+      author: {
+        select: {
+          firstname: true,
+          lastname: true,
+        },
+      },
+    },
     orderBy: {
       createdAt: "desc",
     },
