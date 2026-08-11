@@ -55,7 +55,7 @@ export async function loginUser(req, res, next) {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // <-- browser will only send that cookie over HTTPS
-      sameSite: "strict",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return res.json({
@@ -100,7 +100,7 @@ export async function logoutUser(req, res, next) {
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
     });
     res.json({ message: "Logged out successfully" });
   } catch (error) {
