@@ -1,13 +1,13 @@
 # Blog API
 
-An API that serves as backend for a small blog website. It handles user registration and login, as well as CRUD operations on blog posts and blog comments. It serves two frontend clients: a public one that caters anonymous and registered users and an admin one for posts authors. The main focus is backend reliability: authentication, authorization, validation, token management and database access through Prisma ORM.
+An API that serves as backend for a small blog website. It handles user registration and login, as well as CRUD operations on blog posts and blog comments. It serves two independent frontend clients: a public one that caters anonymous and registered users and an admin one for posts authors. The main focus is backend reliability: authentication, authorization, validation, token management and database access through Prisma ORM.
 
 ## Screenshots
 
 | <img src="./public/home.jpg" width="200"><br>Home           | <img src="./public/register.jpg" width="200"><br>Register     | <img src="./public/login.jpg" width="200"><br>Log in                  | <img src="./public/new_post.jpg" width="200"><br>New post                  |
 | ----------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | <img src="./public/dashboard.jpg" width="200"><br>Dashboard | <img src="./public/view_posts.jpg" width="200"><br>View posts | <img src="./public/add_post_comment.jpg" width="200"><br>Comment post | <img src="./public/delete_post_comment.jpg" width="200"><br>Delete comment |
-|  |
+|                                                             |
 
 ## Live Demo
 
@@ -24,7 +24,15 @@ Password: demo1234
 
 ## Features
 
+- Express app structured around routes, controllers, validators, and Prisma-backed data access
+- JWT-based authentication with Passport and bcrypt, plus protected routes
+
 ## Technical highlights
+
+- Validated CRUD operations server-side, avoiding unnecessary database interactions
+- Generated breadcrumb navigation dynamically from the post titles
+- Restricted all post and comment operations to resources owned by the authenticated user
+- Separated database access into dedicated Prisma query modules, keeping controllers focused on request handling
 
 ## Tech Stack
 
@@ -38,13 +46,15 @@ Password: demo1234
 
 ![Passport.js](https://img.shields.io/badge/Passport.js-34E27A?style=for-the-badge&logo=passport&logoColor=black)
 ![bcryptjs](https://img.shields.io/badge/bcryptjs-525252?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![JWT](https://img.shields.io/badge/JWT-525252?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![Slugify](https://img.shields.io/badge/Slugify-525252?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 
 ## How to run locally
 
 1. Install dependencies with `npm install`
 2. Create a `.env` file with the required variables detailed in `.env.example`
 3. Run `npm run prisma:migrate` and `npm run prisma:generate`
-4. Start the app with `npm run start`
+4. Start the app with `npm run dev`
 
 ## Architecture
 
@@ -54,14 +64,15 @@ Password: demo1234
 ├── config/                    # Passport configuration
 ├── controllers/               # Request handlers
 ├── db/                        # Prisma query modules
-├── lib/                       # Prisma and Cloudinary configuration
+├── lib/                       # Prisma configuration
 ├── middleware/                # Authentication middleware
 ├── prisma/
 │   ├── migrations/
 │   └── schema.prisma          # Database schema
-├── public/                    # CSS and README assets
+├── public/                    # App screenshots
 ├── routes/                    # Express route definitions
 ├── utils/                     # Helper utilities
+├── validators/                # Route validators
 ├── package.json
 └── README.md
 ```
