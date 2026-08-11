@@ -1,62 +1,37 @@
 # Blog API
 
-An API that serves as backend for a small blog website. It handles user registration and login, as well as CRUD operations on blog posts and blog comments. It serves two independent frontend clients: a public one that caters anonymous and registered users and an admin one for posts authors. The main focus is backend reliability: authentication, authorization, validation, token management and database access through Prisma ORM.
+REST API powering a full-stack blog platform with separate public and admin React clients. Implements JWT authentication with Passport, role-based access control, server-side validation, and database abstraction via Prisma.
 
-## Screenshots
+[Live Demo](https://blog-public-client-d222d34a08ef.herokuapp.com/) | Demo: `demo@example.com` / `demo1234`
 
-| <img src="./public/home.jpg" width="200"><br>Home           | <img src="./public/register.jpg" width="200"><br>Register     | <img src="./public/login.jpg" width="200"><br>Log in                  | <img src="./public/new_post.jpg" width="200"><br>New post                  |
-| ----------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| <img src="./public/dashboard.jpg" width="200"><br>Dashboard | <img src="./public/view_posts.jpg" width="200"><br>View posts | <img src="./public/add_post_comment.jpg" width="200"><br>Comment post | <img src="./public/delete_post_comment.jpg" width="200"><br>Delete comment |
-|                                                             |
-
-## Live Demo
-
-[View Live Demo](https://blog-public-client-d222d34a08ef.herokuapp.com/)
-
-## Demo account
-
-To explore the application without creating a new account:
-
-```bash
-Email (username): demo@example.com
-Password: demo1234
-```
+| <img src="./public/login.jpg" width="200"><br>Log in | <img src="./public/dashboard.jpg" width="200"><br>Dashboard | <img src="./public/view_posts.jpg" width="200"><br>View posts | <img src="./public/new_post.jpg" width="200"><br>New post |
+| ---------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------- |
 
 ## Features
 
-- Express app structured around routes, controllers, validators, and Prisma-backed data access
-- JWT-based authentication with Passport and bcrypt, plus protected routes
-
-## Technical highlights
-
-- Validated CRUD operations server-side, avoiding unnecessary database interactions
-- Generated breadcrumb navigation dynamically from the post titles
-- Restricted all post and comment operations to resources owned by the authenticated user
-- Separated database access into dedicated Prisma query modules, keeping controllers focused on request handling
+- **Separated concerns**: Database queries isolated in `/db` modules; controllers focus on HTTP logic
+- **Ownership enforcement**: Middleware-based resource access control; users can only modify their own posts/comments
+- **Validation-first**: Server-side validation with express-validator prevents invalid data from reaching the database
+- **Token-based authentication**: Short-lived JWT access tokens with refresh tokens stored securely as hashed values in the database
 
 ## Tech Stack
 
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
-![express-validator](https://img.shields.io/badge/express--validator-000000?style=for-the-badge&logo=express&logoColor=white)
+- **Frontend**: React, Vite
+- **Runtime**: Node.js, Express
+- **Database**: PostgreSQL, Prisma
+- **Authentication**: JWT, Passport.js, bcryptjs
+- **Validation**: express-validator
 
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![pg](https://img.shields.io/badge/pg-336791?style=for-the-badge&logo=postgresql&logoColor=white)
-![Prisma](https://img.shields.io/badge/prisma-6366f1?style=for-the-badge&logo=prisma&logoColor=white)
+## Setup
 
-![Passport.js](https://img.shields.io/badge/Passport.js-34E27A?style=for-the-badge&logo=passport&logoColor=black)
-![bcryptjs](https://img.shields.io/badge/bcryptjs-525252?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
-![JWT](https://img.shields.io/badge/JWT-525252?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
-![Slugify](https://img.shields.io/badge/Slugify-525252?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+```bash
+npm install
+cp .env.example .env          # Fill in environment variables
+npm run prisma:migrate
+npm run dev
+```
 
-## How to run locally
-
-1. Install dependencies with `npm install`
-2. Create a `.env` file with the required variables detailed in `.env.example`
-3. Run `npm run prisma:migrate` and `npm run prisma:generate`
-4. Start the app with `npm run dev`
-
-## Architecture
+## Project Structure
 
 ```bash
 .
@@ -69,14 +44,11 @@ Password: demo1234
 ├── prisma/
 │   ├── migrations/
 │   └── schema.prisma          # Database schema
-├── public/                    # App screenshots
 ├── routes/                    # Express route definitions
-├── utils/                     # Helper utilities
 ├── validators/                # Route validators
-├── package.json
-└── README.md
+└── utils/                     # Helper utilities
 ```
 
 ## Project context
 
-This project is based on [The Odin Project’s Blog API assignment](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api). I kept the UI intentionally simple so the backend and data flow are the main focus.
+Built as part of The Odin Project's NodeJS curriculum [The Odin Project’s Blog API assignment](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api). The assignment required separate public and admin clients; this implementation uses React clients backed by a shared Express REST API.
