@@ -4,6 +4,8 @@ REST API powering a full-stack blog platform with separate public and admin Reac
 
 [Live Demo](https://blog-public-client-d222d34a08ef.herokuapp.com/) | Demo: `demo@example.com` / `demo1234`
 
+See: [Public Client](https://github.com/pedromorenovillar/blog_public-client) • [Admin Client](https://github.com/pedromorenovillar/blog_admin-client)
+
 | <img src="./public/login.jpg" width="200"><br>Log in | <img src="./public/dashboard.jpg" width="200"><br>Dashboard | <img src="./public/view_posts.jpg" width="200"><br>View posts | <img src="./public/new_post.jpg" width="200"><br>New post |
 | ---------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------- |
 
