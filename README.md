@@ -1,41 +1,17 @@
 # Blog API
 
+An API that serves as backend for a small blog website. It handles user registration and login, as well as CRUD operations on blog posts and blog comments. It serves two frontend clients: a public one that caters anonymous and registered users and an admin one for posts authors. The main focus is backend reliability: authentication, authorization, validation, token management and database access through Prisma ORM.
+
 ## Screenshots
 
-<table>
-  <tr>
-    <td align="center">
-      <img src="public/screenshots/register.png" alt="Register page" width="450"><br>
-      <strong>Register</strong>
-    </td>
-    <td align="center">
-      <img src="public/screenshots/login.png" alt="Login page" width="450"><br>
-      <strong>Login</strong>
-    </td>
-    <td align="center">
-      <img src="public/screenshots/subdirectory_breadcrumbs.png" alt="Name change page" width="450"><br>
-      <strong>Subdirectory and breadcrumbs</strong>
-    </td>
-  </tr>
-  <tr> 
-    <td align="center">
-      <img src="public/screenshots/name_change.png" alt="Name change page" width="450"><br>
-      <strong>Renaming</strong>
-    </td>
-    <td align="center">
-      <img src="public/screenshots/file_details.png" alt="Name change page" width="450"><br>
-      <strong>File details</strong>
-    </td>
-    <td align="center">
-      <img src="public/screenshots/error.png" alt="File upload page displaying errors" width="450"><br>
-      <strong>Upload displaying errors</strong>
-    </td>
-  </tr>
-</table>
+| <img src="./public/home.jpg" width="200"><br>Home           | <img src="./public/register.jpg" width="200"><br>Register     | <img src="./public/login.jpg" width="200"><br>Log in                  | <img src="./public/new_post.jpg" width="200"><br>New post                  |
+| ----------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| <img src="./public/dashboard.jpg" width="200"><br>Dashboard | <img src="./public/view_posts.jpg" width="200"><br>View posts | <img src="./public/add_post_comment.jpg" width="200"><br>Comment post | <img src="./public/delete_post_comment.jpg" width="200"><br>Delete comment |
+|  |
 
 ## Live Demo
 
-[View Live Demo](https://file-uploader-b14b40eb7fbc.herokuapp.com/)
+[View Live Demo](https://blog-public-client-d222d34a08ef.herokuapp.com/)
 
 ## Demo account
 
@@ -66,13 +42,7 @@ Password: demo1234
 ## How to run locally
 
 1. Install dependencies with `npm install`
-2. Create a `.env` file with the required variables:
-
-```bash
-DATABASE_URL
-PORT
-```
-
+2. Create a `.env` file with the required variables detailed in `.env.example`
 3. Run `npm run prisma:migrate` and `npm run prisma:generate`
 4. Start the app with `npm run start`
 
@@ -98,4 +68,4 @@ PORT
 
 ## Project context
 
-This project is based on [The Odin Project’s Blog API assignment](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api).
+This project is based on [The Odin Project’s Blog API assignment](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api). I kept the UI intentionally simple so the backend and data flow are the main focus.
