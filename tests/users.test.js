@@ -16,7 +16,7 @@ test("POST /api/users/register creates a user", async () => {
   const newUser = {
     firstName: "Peter",
     lastName: "Parker",
-    email: "spidey@example.com",
+    email: "peter.parker@example.com",
     password: "withagreatpower",
     passwordConfirm: "withagreatpower",
   };
