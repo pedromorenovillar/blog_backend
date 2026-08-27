@@ -15,6 +15,7 @@ See: [Public Client](https://github.com/pedromorenovillar/blog_public-client) â€
 - **Ownership enforcement**: Middleware-based resource access control; users can only modify their own posts/comments
 - **Validation-first**: Server-side validation with express-validator prevents invalid data from reaching the database
 - **Token-based authentication**: Short-lived JWT access tokens with refresh tokens stored securely as hashed values in the database
+- **Integration testing**: Jest and Supertest tests cover API endpoints, authentication, authorization, database mutations, and password hashing
 
 ## Tech Stack
 
@@ -23,6 +24,31 @@ See: [Public Client](https://github.com/pedromorenovillar/blog_public-client) â€
 - **Database**: PostgreSQL, Prisma
 - **Authentication**: JWT, Passport.js, bcryptjs
 - **Validation**: express-validator
+- **Testing**: Jest, Supertest
+
+## Testing
+
+Integration tests are written with Jest and Supertest and run against a dedicated test database.
+
+The test suite covers:
+
+- `GET /api/posts` returns only published posts
+- `POST /api/users/register` creates a user with a hashed password
+- Unauthenticated users cannot create posts (`401`)
+- Authenticated authors can create posts
+- Authenticated non-authors cannot publish posts (`403`)
+
+The schema can be prepared with:
+
+```bash
+npm run migrate:test
+```
+
+Run the test suite with:
+
+```bash
+npm test
+```
 
 ## Setup
 
