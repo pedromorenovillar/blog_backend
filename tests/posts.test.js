@@ -16,7 +16,7 @@ beforeEach(() => {
         data: {
           firstname: "Peter",
           lastname: "Parker",
-          email: "spidey.com",
+          email: "spidey@example.com",
           password: "withagreatpower",
         },
       });
