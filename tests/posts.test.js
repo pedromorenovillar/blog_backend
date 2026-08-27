@@ -5,55 +5,48 @@ import { hashString } from "../utils/hashString.js";
 
 const request = supertest(app);
 
-beforeEach(() => {
-  return prisma.post
-    .deleteMany() // Delete posts
-    .then(() => {
-      return prisma.user.deleteMany(); // Delete users
-    })
-    .then(() => {
-      return prisma.user.create({
-        // Create test user
-        data: {
-          firstname: "Peter",
-          lastname: "Parker",
-          email: "spidey@example.com",
-          password: "withagreatpower",
-        },
-      });
-    })
-    .then((user) => {
-      // Chaining: the result of create() arrives in user
-      return user.id; // get user.id
-    })
-    .then((userId) => {
-      return prisma.post.createMany({
-        // create 3 test posts
-        data: [
-          {
-            authorId: userId,
-            title: "Test post",
-            slug: "test-post",
-            content: "post content",
-            isPublished: true,
-          },
-          {
-            authorId: userId,
-            title: "Test post 2",
-            slug: "test-post-2",
-            content: "post content",
-            isPublished: true,
-          },
-          {
-            authorId: userId,
-            title: "Test post 3",
-            slug: "test-post-3",
-            content: "post content",
-            isPublished: false,
-          },
-        ],
-      });
-    });
+const password = "withagreatpower";
+let testUser;
+
+beforeEach(async () => {
+  await prisma.post.deleteMany(); // Delete posts
+  await prisma.user.deleteMany(); // Delete users
+
+  const hash = await hashString(password);
+  testUser = await prisma.user.create({
+    data: {
+      firstname: "Peter",
+      lastname: "Parker",
+      email: "spidey@example.com",
+      password: hash,
+    },
+  });
+  await prisma.post.createMany({
+    // create 3 test posts
+    data: [
+      {
+        authorId: testUser.id,
+        title: "Test post",
+        slug: "test-post",
+        content: "post content",
+        isPublished: true,
+      },
+      {
+        authorId: testUser.id,
+        title: "Test post 2",
+        slug: "test-post-2",
+        content: "post content",
+        isPublished: true,
+      },
+      {
+        authorId: testUser.id,
+        title: "Test post 3",
+        slug: "test-post-3",
+        content: "post content",
+        isPublished: false,
+      },
+    ],
+  });
 });
 
 test("GET /api/posts returns published posts", async () => {
@@ -131,4 +124,28 @@ test("Authenticated user can create a post", async () => {
   expect(createdPost.title).toBe(newPost.title);
   expect(createdPost.content).toBe(newPost.content);
   expect(createdPost.authorId).toBe(author.id);
+});
+
+test("Non-author cannot publish a post", async () => {
+  // Login non-author
+  const loginRes = await request.post("/api/users/login").send({
+    email: testUser.email,
+    password: password,
+  });
+  expect(loginRes.status).toBe(200); // Login successful
+
+  const accessToken = loginRes.body.accessToken;
+  expect(accessToken).toEqual(expect.any(String)); // Token is a string
+
+  const createdPost = await prisma.post.findFirst({
+    where: {
+      authorId: testUser.id,
+      title: "Test post 3",
+    },
+  });
+  expect(createdPost).not.toBeNull();
+  const patchRes = await request
+    .patch(`/api/posts/${createdPost.id}/publish`)
+    .set("Authorization", `Bearer ${accessToken}`);
+  expect(patchRes.status).toBe(403);
 });
