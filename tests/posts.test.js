@@ -71,3 +71,11 @@ test("GET /api/posts returns published posts", async () => {
   );
   expect(res.body.some((post) => post.title === "Test post 3")).toBe(false); // no post has title "Test post 3"
 });
+
+test("Unauthenticated POST /api/posts returns 401", async () => {
+  const res = await request.post("/api/posts").send({
+    title: "Test post",
+    content: "Test post content",
+  });
+  expect(res.status).toBe(401); // Status is 401
+});
