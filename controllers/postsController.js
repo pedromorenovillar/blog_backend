@@ -21,7 +21,7 @@ export async function createPost(req, res, next) {
 
     // Store post
     const post = await insertPost(userId, title, slug, content);
-
+    console.log(`Post ${post.id} created by user ${req.user.id}`);
     res.status(201).json(post);
   } catch (error) {
     next(error);
@@ -79,7 +79,7 @@ export async function updatePost(req, res, next) {
 
     // Store post
     const post = await updatePostById(postId, title, slug, content);
-
+    console.log(`Post ${req.post.id} updated by user ${req.user.id}`);
     res.json(post);
   } catch (error) {
     next(error);
@@ -92,6 +92,7 @@ export async function deletePost(req, res, next) {
     const postId = req.post.id;
     // Delete post
     const deletedPost = await deletePostById(postId);
+    console.log(`Post ${req.post.id} deleted by user ${req.user.id}`);
     res.json(deletedPost);
   } catch (error) {
     next(error);
@@ -104,6 +105,7 @@ export async function publishPost(req, res, next) {
     const postId = req.post.id;
     // Change isPublished status
     const post = await updatePostPublishedStatus(postId, true);
+    console.log(`Post ${req.post.id} published by user ${req.user.id}`);
     res.json(post);
   } catch (error) {
     next(error);
@@ -115,6 +117,7 @@ export async function unpublishPost(req, res, next) {
     const postId = req.post.id;
     // Change isPublished status
     const post = await updatePostPublishedStatus(postId, false);
+    console.log(`Post ${req.post.id} published by user ${req.user.id}`);
     res.json(post);
   } catch (error) {
     next(error);
