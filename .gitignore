@@ -1,6 +1,24 @@
 node_modules
-# Keep environment variables out of version control
+# Environment variables
 .env
 .env.test
 
 /generated/prisma
+
+# Local testing files
+cookies.txt
+curl_queries.md
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# Editor configs
+.vscode/
+.idea/
+
+# Build artifacts
+dist/
+build/
