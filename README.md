@@ -1,6 +1,22 @@
 # Blog API
 
-REST API powering a full-stack blog platform with separate public and admin React clients. Implements JWT authentication with Passport, role-based access control, server-side validation, and database abstraction via Prisma.
+REST API powering a full-stack blog platform with:
+
+- Public and admin React clients
+
+- Secure JWT authentication with refresh tokens
+
+- Role‑based access control
+
+- Strict server‑side validation
+
+- Prisma ORM + PostgreSQL
+
+- Integration tests (Jest + Supertest)
+
+- Clean architecture (controllers → services → db)
+
+This README includes technical details for reviewers.
 
 [Live Demo](https://blog-public-client-d222d34a08ef.herokuapp.com/) | Demo: `demo@example.com` / `demo1234`
 
@@ -85,6 +101,143 @@ The API includes basic logging for debugging and development:
 - Authentication events (user registration, login, logout)
 - Important actions (post creation, update, delete, publishing/unpublishing, comment creation, update and deletion)
 - Error logging through the global error handler
+
+## Validation
+
+The API uses **express-validator** to enforce strict input validation across all endpoints.
+
+### Authentication validation
+
+- Email format
+- Email uniqueness
+- Password length
+- Password confirmation
+- Normalization (`trim`, `toLowerCase`)
+
+### Post validation
+
+- `title`: required, trimmed, max 100 chars
+- `content`: required, trimmed, max 3000 chars
+- `id`: must be a positive integer
+
+### Comment validation
+
+- `content`: required, trimmed, max 3000 chars
+- `postId`: must be a positive integer
+- `id`: must be a positive integer
+
+Validation errors return:
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Content is required.",
+      "param": "content",
+      "location": "body"
+    }
+  ]
+}
+```
+
+## Authentication Flow
+
+```mermaid
+sequenceDiagram
+  participant Client
+  participant API
+  participant DB
+
+  Client->>API: POST /login (email, password)
+  API->>DB: Validate user credentials
+  DB-->>API: User found
+  API-->>Client: accessToken + HttpOnly refreshToken cookie
+
+  Client->>API: Authenticated request (Authorization: Bearer accessToken)
+  API-->>Client: Protected resource
+
+  Client->>API: POST /logout
+  API->>DB: Invalidate refresh token
+  API-->>Client: Cookie cleared
+```
+
+## Error Handling
+
+The API includes a global error handler that:
+
+- Logs errors internally
+- Returns consistent JSON responses
+- Prevents leaking internal details
+
+Example error response:
+
+```json
+{
+  "message": "Post not found"
+}
+```
+
+Example internal log:
+
+```
+[ERROR] Error: Post not found
+```
+
+## Example Endpoints
+
+### Create Post
+
+**Request**
+
+```http
+POST /api/posts
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "title": "My first post",
+  "content": "Hello world!"
+}
+```
+
+**Response**
+
+```json
+{
+  "id": 12,
+  "title": "My first post",
+  "content": "Hello world!",
+  "authorId": 1
+}
+```
+
+---
+
+### Create Comment
+
+**Request**
+
+```http
+POST /api/comments
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "postId": 12,
+  "content": "Nice post!"
+}
+```
+
+**Response**
+
+```json
+{
+  "id": 55,
+  "postId": 12,
+  "content": "Nice post!",
+  "authorId": 1
+}
+```
 
 ## Project context
 
