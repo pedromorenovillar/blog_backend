@@ -14,13 +14,17 @@ import {
   getUserToken,
 } from "../db/authQueries.js";
 
+const now = new Date().toISOString();
+
 export const registerUser = async (req, res, next) => {
   try {
     const user = req.body;
     const hash = await hashString(user.password);
 
     const result = await insertUser(user, hash);
-    console.log(`User ${user.firstName} ${user.lastName} registered`);
+    console.log(
+      `[${now}] [AUTH] User ${user.firstName} ${user.lastName} registered`,
+    );
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     next(error);
@@ -59,7 +63,7 @@ export async function loginUser(req, res, next) {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    console.log(`User ${user.id} logged in`);
+    console.log(`[${now}] [AUTH] User ${user.id} logged in`);
     return res.json({
       accessToken,
     });
@@ -104,7 +108,7 @@ export async function logoutUser(req, res, next) {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
     });
-    console.log(`User ${req.user.id} logged out`);
+    console.log(`[${now}] [AUTH] User ${req.user.id} logged out`);
     res.json({ message: "Logged out successfully" });
   } catch (error) {
     next(error);
