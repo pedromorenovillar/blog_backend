@@ -1,5 +1,4 @@
 // Responsible for starting the HTTP server
-
 import app from "./app.js";
 
 const PORT = process.env.PORT;

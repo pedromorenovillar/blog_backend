@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import { usersRouter } from "./routes/usersRouter.js";
 import { postsRouter } from "./routes/postsRouter.js";
 import { commentsRouter } from "./routes/commentsRouter.js";
+import morgan from "morgan";
 
 /* ===========================
    App config 1/2
@@ -26,6 +27,7 @@ app.use(express.json()); // <-- Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // <-- Parse the data into req.body for post requests
 app.use(passport.initialize());
 app.use(cookieParser());
+app.use(morgan("dev"));
 
 /* ===========================
    App routes
@@ -34,6 +36,7 @@ app.use(cookieParser());
 app.get("/", (req, res) => {
   res.json({ message: "API running" });
 });
+
 app.use("/api/users", usersRouter);
 app.use("/api/posts", postsRouter);
 app.use("/api/comments", commentsRouter);
@@ -43,12 +46,10 @@ app.use("/api/comments", commentsRouter);
 =========================== */
 
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error(`[ERROR] ${err.name}: ${err.message}`);
   res.status(err.statusCode || 500).json({
     message: err.message,
   });
 });
-
-
 
 export default app;

@@ -9,6 +9,7 @@ import {
   updatePostPublishedStatus,
   findAllPostComments,
 } from "../db/postsQueries.js";
+const now = new Date().toISOString();
 
 export async function createPost(req, res, next) {
   try {
@@ -21,7 +22,9 @@ export async function createPost(req, res, next) {
 
     // Store post
     const post = await insertPost(userId, title, slug, content);
-
+    console.log(
+      `[${now}] [POST] Post ${post.id} created by user ${req.user.id}`,
+    );
     res.status(201).json(post);
   } catch (error) {
     next(error);
@@ -79,7 +82,9 @@ export async function updatePost(req, res, next) {
 
     // Store post
     const post = await updatePostById(postId, title, slug, content);
-
+    console.log(
+      `[${now}] [POST] Post ${postId} updated by user ${req.user.id}`,
+    );
     res.json(post);
   } catch (error) {
     next(error);
@@ -92,6 +97,9 @@ export async function deletePost(req, res, next) {
     const postId = req.post.id;
     // Delete post
     const deletedPost = await deletePostById(postId);
+    console.log(
+      `[${now}] [POST] Post ${postId} deleted by user ${req.user.id}`,
+    );
     res.json(deletedPost);
   } catch (error) {
     next(error);
@@ -104,6 +112,9 @@ export async function publishPost(req, res, next) {
     const postId = req.post.id;
     // Change isPublished status
     const post = await updatePostPublishedStatus(postId, true);
+    console.log(
+      `[${now}] [POST] Post ${postId} published by user ${req.user.id}`,
+    );
     res.json(post);
   } catch (error) {
     next(error);
@@ -115,6 +126,9 @@ export async function unpublishPost(req, res, next) {
     const postId = req.post.id;
     // Change isPublished status
     const post = await updatePostPublishedStatus(postId, false);
+    console.log(
+      `[${now}] [POST] Post ${postId} published by user ${req.user.id}`,
+    );
     res.json(post);
   } catch (error) {
     next(error);

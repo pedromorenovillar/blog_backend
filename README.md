@@ -26,30 +26,6 @@ See: [Public Client](https://github.com/pedromorenovillar/blog_public-client) �
 - **Validation**: express-validator
 - **Testing**: Jest, Supertest
 
-## Testing
-
-Integration tests are written with Jest and Supertest and run against a dedicated test database.
-
-The test suite covers:
-
-- `GET /api/posts` returns only published posts
-- `POST /api/users/register` creates a user with a hashed password
-- Unauthenticated users cannot create posts (`401`)
-- Authenticated authors can create posts
-- Authenticated non-authors cannot publish posts (`403`)
-
-The schema can be prepared with:
-
-```bash
-npm run migrate:test
-```
-
-Run the test suite with:
-
-```bash
-npm test
-```
-
 ## Setup
 
 ```bash
@@ -76,6 +52,39 @@ npm run dev
 ├── validators/                # Route validators
 └── utils/                     # Helper utilities
 ```
+
+## Testing
+
+Integration tests are written with Jest and Supertest and run against a dedicated test database.
+
+The test suite covers:
+
+- `GET /api/posts` returns only published posts
+- `POST /api/users/register` creates a user with a hashed password
+- Unauthenticated users cannot create posts (`401`)
+- Authenticated authors can create posts
+- Authenticated non-authors cannot publish posts (`403`)
+
+The schema can be prepared with:
+
+```bash
+npm run migrate:test
+```
+
+Run the test suite with:
+
+```bash
+npm test
+```
+
+## Logs & Debugging
+
+The API includes basic logging for debugging and development:
+
+- Request logging via Morgan (`dev` format)
+- Authentication events (user registration, login, logout)
+- Important actions (post creation, update, delete, publishing/unpublishing, comment creation, update and deletion)
+- Error logging through the global error handler
 
 ## Project context
 
