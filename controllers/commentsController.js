@@ -14,6 +14,7 @@ export async function createComment(req, res, next) {
     await ensureCommentablePost(postId);
     // Save comment
     const comment = await insertComment(authorId, postId, content);
+    console.log(`Comment ${comment.id} created by user ${req.user.id}`);
     res.status(201).json(comment);
   } catch (error) {
     next(error);
@@ -29,7 +30,7 @@ export async function updateComment(req, res, next) {
 
     // Store comment
     const comment = await updateCommentById(commentId, content);
-
+    console.log(`Comment ${commentId} updated by user ${req.user.id}`);
     res.json(comment);
   } catch (error) {
     next(error);
@@ -42,6 +43,7 @@ export async function deleteComment(req, res, next) {
     const commentId = req.comment.id;
     // Delete comment
     const deletedComment = await deleteCommentById(commentId);
+    console.log(`Comment ${commentId} updated by user ${req.user.id}`);
     res.json(deletedComment);
   } catch (error) {
     next(error);
