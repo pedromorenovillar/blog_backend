@@ -108,7 +108,7 @@ export async function logoutUser(req, res, next) {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
     });
-    console.log(`[${now}] [AUTH] User ${req.user.id} logged out`);
+    console.log(`[${now}] [AUTH] User ${payload.sub} logged out`);
     res.json({ message: "Logged out successfully" });
   } catch (error) {
     next(error);
